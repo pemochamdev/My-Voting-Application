@@ -8,6 +8,7 @@
 <body>
     {% if msg %}
       <h4>You have already voted this category</h4>
+      <a href=" {% url "result" category.slug %} ">Show Result</a>
     {% else %}    
         <form action="" method="post">
             {% csrf_token %}

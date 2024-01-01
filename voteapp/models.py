@@ -30,6 +30,17 @@ class CategoryItem(models.Model):
     updated_at = models.DateTimeField(auto_now = True)
 
 
+    @property
+    def percentage_vote(self):
+        category_vote = self.category.total_vote
+        category_item_vote = self.total_vote
+        if category_vote == 0:
+            vote_in_percentage = 0
+        else:
+            vote_in_percentage = (category_item_vote/category_vote)*100
+        
+        return vote_in_percentage
+
 
     def __str__(self):
         return self.title

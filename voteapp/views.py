@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404, redirect
 from django.urls import reverse_lazy, reverse
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.views import LoginView, LogoutView
@@ -45,6 +45,7 @@ def detail(request, slug):
         item.category.voters.add(request.user)
         item.save()
         category_item.save()
+        return redirect("result", slug=category.slug)
         
     context = {
         'category': category,
@@ -53,9 +54,17 @@ def detail(request, slug):
     }
     return render(request, template_name, context)
 
-def result(request):
+def result(request, slug):
+    #category = get_object_or_404(Category, slug=slug)
+    category = Category.objects.get(slug=slug)
+    category_items = CategoryItem.objects.filter(category=category)
+    
     template_name = 'result.html'
-    context = {}
+    context = {
+        'category_items':category_items,
+        'category':category,
+        
+    }
     return render(request, template_name, context)
 
 

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Vote App</title>
+</head>
+<body>
+    {% load custom_filters %}
+    {% load humanize %}
+    <h2>Result Of Vote</h2>
+    <h4> {{category.title}} </h4> <br>
+    <h4>Total Vote: {{category.total_vote}} </h4>
+    {% for category_item in category_items %}
+    {% if request.user|has_voted:category_item.voters.all %}
+    
+    
+     
+     <small>{{category_item.title}} <strong>--- {{category_item.total_vote}}  {% if category_item.total_vote == 0 %}vote {% else %} vote{{category_item.total_vote|pluralize:",s"}}{% endif %}--- <i>[voted]</i> </strong> </small>
+     <div class="progressContainer">
+        <div class="progress" style="width: 25;">
+
+            <progress value="{{category_item.percentage_vote | floatformat:0}}" max="100"></progess>
+            </div>
+            <p>{{category_item.percentage_vote | floatformat:0}}%</p>
+        </div>
+     <br>
+     {% else %}
+        
+    
+     
+     <small>{{category_item.title}} <strong>--- {{category_item.total_vote}} {% if category_item.total_vote == 0 %}vote {% else %} vote{{category_item.total_vote|pluralize:",s"}}{% endif %}</strong> </small>
+     <div class="progressContainer">
+        <div class="progress" style="width: 25;">
+
+            <progress value="{{category_item.percentage_vote | floatformat:0}}" max="100"></progess>
+            </div>
+            <p>{{category_item.percentage_vote | floatformat:0}}%</p>
+        </div>
+     <br>
+     {% endif %}
+    {% endfor %}
+    
+</body>
+</html>
