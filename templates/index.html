@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My voting</title>
+</head>
+<body>
+    <h1>Welcome To My Voting App</h1>
+    {% for category in categories  %}          
+    <h3>{{category.title}}</h3>
+    <p>{{category.description}} </p>
+    <a href=" {% url 'detail' category.slug %} ">Vote</a>
+   
+    {% endfor %}
+</body>
+</html>

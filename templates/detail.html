@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My voting</title>
+</head>
+<body>
+    {% if msg %}
+      <h4>You have already voted this category</h4>
+    {% else %}    
+        <form action="" method="post">
+            {% csrf_token %}
+
+            <h1>Detail Category</h1>
+            <h3>{{category.title}}</h3>
+            <p>{{category.description}}</p>
+            <p>{{category.total_vote}}</p>
+            
+            <p>{{category.created_at}}</p>
+
+            {% for category_item in category_items  %}
+                <input type="radio" name="category_item" id="{{category_item.id}}" value="{{category_item.id}}">
+                <label for="{{category_item.id}}"><p> {{category_item.title}} </p></label>                            
+            {% endfor %}
+            <button type="submit">Submit</button>
+        
+    </form>
+   {% endif %}
+</body>
+</html>
